@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+      integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:400,600|Open+Sans:400,600,700"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/easion.css" />
+    <title>Library - Books</title>
+  </head>
+
+  <body>
+    <div class="dash">
+      <div class="dash-nav dash-nav-dark">
+        <header>
+          <a href="#!" class="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </a>
+          <a href="index.html" class="easion-logo"><span>Library</span></a>
+        </header>
+        <nav class="dash-nav-list">
+          <a href="index.html" class="dash-nav-item">
+            <i class="fas fa-home"></i> Dashboard
+          </a>
+          <a href="book.html" class="dash-nav-item">
+            <i class="fas fa-book"></i> Books
+          </a>
+          <a href="category.html" class="dash-nav-item">
+            <i class="fas fa-list"></i> Categories
+          </a>
+        </nav>
+      </div>
+      <div class="dash-app">
+        <header class="dash-toolbar">
+          <a href="#!" class="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </a>
+          <div class="tools">
+            <div class="dropdown tools-item">
+              <a
+                href="#"
+                class=""
+                id="dropdownMenu1"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-user"></i>
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right"
+                aria-labelledby="dropdownMenu1"
+              >
+                <a class="dropdown-item" href="profile.html">Profile</a>
+                <a class="dropdown-item" href="#!" id="logout-btn">Logout</a>
+              </div>
+            </div>
+          </div>
+        </header>
+        <main class="dash-content">
+          <div class="container-fluid">
+            <h1 class="dash-title">Books</h1>
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card easion-card">
+                  <div class="card-header">
+                    <div class="easion-card-icon">
+                      <i class="fas fa-book"></i>
+                    </div>
+                    <div class="easion-card-title">All Books</div>
+                    <div class="easion-card-menu">
+                      <button
+                        class="btn btn-primary btn-sm"
+                        data-toggle="modal"
+                        data-target="#bookModal"
+                        onclick="openAddBookModal()"
+                      >
+                        <i class="fas fa-plus"></i> Add Book
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <table class="table table-striped table-in-card">
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Category</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody id="books-table-body">
+                        <tr>
+                          <td colspan="6" class="text-center">
+                            Loading books...
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Add/Edit Book Modal -->
+    <div
+      class="modal fade"
+      id="bookModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="bookModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="bookModalLabel">Add Book</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form id="book-form">
+            <div class="modal-body">
+              <input type="hidden" id="book-id" />
+              <div class="form-group">
+                <label for="book-name">Book Name *</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="book-name"
+                  required
+                  maxlength="100"
+                />
+              </div>
+              <div class="form-group">
+                <label for="book-description">Description</label>
+                <textarea
+                  class="form-control"
+                  id="book-description"
+                  rows="3"
+                  maxlength="500"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label for="book-category">Category *</label>
+                <select class="form-control" id="book-category" required>
+                  <option value="">Select a category...</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="book-quantity">Quantity *</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="book-quantity"
+                  min="0"
+                  required
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">Save Book</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/easion.js"></script>
+    <script src="../js/auth.js"></script>
+
+    <script>
+      // Check authentication
+      window.addEventListener("DOMContentLoaded", function () {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          window.location.href = "login.html";
+          return;
+        }
+        loadBooks();
+        loadCategories();
+      });
+
+      // Load all books
+      async function loadBooks() {
+        try {
+          const response = await bookAPI.getAll();
+          const tbody = document.getElementById("books-table-body");
+
+          if (!response.success || response.books.length === 0) {
+            tbody.innerHTML =
+              '<tr><td colspan="6" class="text-center">No books found. Click "Add Book" to create one.</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = response.books
+            .map(
+              (book, index) => `
+                    <tr>
+                        <th scope="row">${index + 1}</th>
+                        <td>${book.name}</td>
+                        <td>${book.description || "-"}</td>
+                        <td>
+                            ${
+                              book.categoryId
+                                ? `
+                                <span class="badge" style="background-color: ${book.categoryId.color || "#6c757d"}; color: white; padding: 5px 10px; border-radius: 3px;">
+                                    ${book.categoryId.name}
+                                </span>
+                            `
+                                : "-"
+                            }
+                        </td>
+                        <td>${book.quantity}</td>
+                        <td>
+                            <button class="btn btn-sm btn-info" onclick="editBook('${book._id}')" data-toggle="modal" data-target="#bookModal">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="deleteBook('${book._id}', '${book.name}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `,
+            )
+            .join("");
+        } catch (error) {
+          console.error("Error loading books:", error);
+          document.getElementById("books-table-body").innerHTML =
+            `<tr><td colspan="6" class="text-center text-danger">Error loading books: ${error.message}</td></tr>`;
+        }
+      }
+
+      // Load categories for dropdown
+      async function loadCategories() {
+        try {
+          const response = await categoryAPI.getAll();
+          const select = document.getElementById("book-category");
+
+          if (response.success && response.categories) {
+            select.innerHTML =
+              '<option value="">Select a category...</option>' +
+              response.categories
+                .map((cat) => `<option value="${cat._id}">${cat.name}</option>`)
+                .join("");
+          }
+        } catch (error) {
+          console.error("Error loading categories:", error);
+        }
+      }
+
+      // Open modal for adding book
+      function openAddBookModal() {
+        document.getElementById("bookModalLabel").textContent = "Add Book";
+        document.getElementById("book-form").reset();
+        document.getElementById("book-id").value = "";
+      }
+
+      // Edit book
+      async function editBook(bookId) {
+        try {
+          const response = await bookAPI.getAll();
+          const book = response.books.find((b) => b._id === bookId);
+
+          if (book) {
+            document.getElementById("bookModalLabel").textContent = "Edit Book";
+            document.getElementById("book-id").value = book._id;
+            document.getElementById("book-name").value = book.name;
+            document.getElementById("book-description").value =
+              book.description || "";
+            document.getElementById("book-category").value =
+              book.categoryId?._id || "";
+            document.getElementById("book-quantity").value = book.quantity;
+          }
+        } catch (error) {
+          alert("Error loading book: " + error.message);
+        }
+      }
+
+      // Delete book
+      async function deleteBook(bookId, bookName) {
+        if (!confirm(`Are you sure you want to delete "${bookName}"?`)) {
+          return;
+        }
+
+        try {
+          await bookAPI.delete(bookId);
+          alert("Book deleted successfully!");
+          loadBooks();
+        } catch (error) {
+          alert("Error deleting book: " + error.message);
+        }
+      }
+
+      // Handle form submission
+      document
+        .getElementById("book-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const bookId = document.getElementById("book-id").value;
+          const bookData = {
+            name: document.getElementById("book-name").value,
+            description: document.getElementById("book-description").value,
+            categoryId: document.getElementById("book-category").value,
+            quantity: parseInt(document.getElementById("book-quantity").value),
+          };
+
+          try {
+            if (bookId) {
+              await bookAPI.update(bookId, bookData);
+              alert("Book updated successfully!");
+            } else {
+              await bookAPI.create(bookData);
+              alert("Book created successfully!");
+            }
+
+            $("#bookModal").modal("hide");
+            loadBooks();
+          } catch (error) {
+            alert("Error saving book: " + error.message);
+          }
+        });
+
+      // Logout functionality
+      document.getElementById("logout-btn").addEventListener("click", logout);
+    </script>
+  </body>
+</html>

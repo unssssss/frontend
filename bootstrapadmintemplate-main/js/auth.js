@@ -173,3 +173,208 @@ if (showLoginLink) {
 if (logoutBtn) {
   logoutBtn.addEventListener("click", logout);
 }
+
+// Add this to the userAPI object in auth.js
+const userAPI = {
+  register: async (userData) => {
+    const response = await fetch(`${API_URL}/users/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.msg || data.message);
+    return data;
+  },
+
+  login: async (credentials) => {
+    const response = await fetch(`${API_URL}/users/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.msg || data.message);
+    return data;
+  },
+
+  getMe: async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("No token found. Please login again.");
+    }
+
+    console.log("Getting user profile with token:", token); // Debug
+
+    const response = await fetch(`${API_URL}/users/me`, {
+      method: "GET",
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+
+    console.log("Get profile response status:", response.status); // Debug
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || data.msg);
+    return data;
+  },
+
+  deleteAccount: async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("No token found. Please login again.");
+    }
+
+    console.log("Deleting account with token:", token); // Debug
+
+    const response = await fetch(`${API_URL}/users/me`, {
+      method: "DELETE",
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+
+    console.log("Delete response status:", response.status); // Debug
+    console.log(
+      "Delete response headers:",
+      response.headers.get("content-type"),
+    ); // Debug
+
+    // Check if response is JSON
+    const contentType = response.headers.get("content-type");
+    if (!contentType || !contentType.includes("application/json")) {
+      const text = await response.text();
+      console.error("Non-JSON response:", text); // Debug
+      throw new Error("Server returned an error. Please check the console.");
+    }
+
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message || data.msg);
+    return data;
+  },
+};
+
+// Book API functions (add these at the end of auth.js)
+const bookAPI = {
+  getAll: async () => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/books`, {
+      method: "GET",
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  },
+
+  create: async (bookData) => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/books`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify(bookData),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  },
+
+  update: async (id, bookData) => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/books/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify(bookData),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  },
+
+  delete: async (id) => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/books/${id}`, {
+      method: "DELETE",
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  },
+};
+
+// Category API functions (add to auth.js)
+const categoryAPI = {
+  getAll: async () => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/categories`, {
+      method: "GET",
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  },
+
+  create: async (categoryData) => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/categories`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify(categoryData),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  },
+
+  update: async (id, categoryData) => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/categories/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "x-auth-token": token,
+      },
+      body: JSON.stringify(categoryData),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  },
+
+  delete: async (id) => {
+    const token = localStorage.getItem("token");
+    const response = await fetch(`${API_URL}/categories/${id}`, {
+      method: "DELETE",
+      headers: {
+        "x-auth-token": token,
+      },
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.message);
+    return data;
+  },
+};
+
+module.exports = auth;

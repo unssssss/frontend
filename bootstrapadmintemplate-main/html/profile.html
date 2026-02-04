@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+      integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:400,600|Open+Sans:400,600,700"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/easion.css" />
+    <title>Library - Profile</title>
+  </head>
+
+  <body>
+    <div class="dash">
+      <div class="dash-nav dash-nav-dark">
+        <header>
+          <a href="#!" class="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </a>
+          <a href="index.html" class="easion-logo"><span>Library</span></a>
+        </header>
+        <nav class="dash-nav-list">
+          <a href="index.html" class="dash-nav-item">
+            <i class="fas fa-home"></i> Dashboard
+          </a>
+          <a href="book.html" class="dash-nav-item">
+            <i class="fas fa-book"></i> Books
+          </a>
+          <a href="category.html" class="dash-nav-item">
+            <i class="fas fa-list"></i> Categories
+          </a>
+        </nav>
+      </div>
+      <div class="dash-app">
+        <header class="dash-toolbar">
+          <a href="#!" class="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </a>
+          <div class="tools">
+            <div class="dropdown tools-item"
+              
+                href="#"
+                class=""
+                id="dropdownMenu1"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i class="fas fa-user"></i>
+              </a>
+              <div
+                class="dropdown-menu dropdown-menu-right"
+                aria-labelledby="dropdownMenu1"
+              >
+                <a class="dropdown-item" href="profile.html">Profile</a>
+                <a class="dropdown-item" href="#!" id="logout-btn">Logout</a>
+              </div>
+            </div>
+          </div>
+        </header>
+        <main class="dash-content">
+          <div class="container-fluid">
+            <h1 class="dash-title">Profile</h1>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="card easion-card">
+                  <div class="card-header">
+                    <div class="easion-card-icon">
+                      <i class="fas fa-user"></i>
+                    </div>
+                    <div class="easion-card-title">Account Information</div>
+                  </div>
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label>Username</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="username"
+                        readonly
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label>Account Created</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="created-at"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="card easion-card border-danger">
+                  <div class="card-header bg-danger text-white">
+                    <div class="easion-card-icon">
+                      <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="easion-card-title">Danger Zone</div>
+                  </div>
+                  <div class="card-body">
+                    <h5>Delete Account</h5>
+                    <p class="text-muted">
+                      Once you delete your account, there is no going back. This
+                      will permanently delete all your books and categories.
+                    </p>
+                    <button
+                      class="btn btn-danger"
+                      onclick="confirmDeleteAccount()"
+                    >
+                      <i class="fas fa-trash"></i> Delete My Account
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div
+      class="modal fade"
+      id="deleteModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="deleteModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header bg-danger text-white">
+            <h5 class="modal-title" id="deleteModalLabel">
+              Confirm Account Deletion
+            </h5>
+            <button
+              type="button"
+              class="close text-white"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              <strong>Are you absolutely sure?</strong>
+            </p>
+            <p>This action cannot be undone. This will permanently delete:</p>
+            <ul>
+              <li>Your account</li>
+              <li>All your books</li>
+              <li>All your categories</li>
+            </ul>
+            <p>
+              Type <strong id="username-confirm"></strong> to confirm:
+            </p>
+            <input
+              type="text"
+              class="form-control"
+              id="delete-confirm-input"
+              placeholder="Type your username"
+            />
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger"
+              onclick="deleteAccount()"
+            >
+              I understand, delete my account
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/easion.js"></script>
+    <script src="../js/auth.js"></script>
+
+    <script>
+      let currentUsername = "";
+
+      // Check authentication and load profile
+      window.addEventListener("DOMContentLoaded", async function () {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          window.location.href = "login.html";
+          return;
+        }
+        await loadProfile();
+      });
+
+      // Load user profile
+      async function loadProfile() {
+        try {
+          const user = await userAPI.getMe();
+          currentUsername = user.username;
+
+          document.getElementById("username").value = user.username;
+          document.getElementById("username-confirm").textContent =
+            user.username;
+
+          // Format date
+          const date = new Date(user.createdAt);
+          document.getElementById("created-at").value = date.toLocaleDateString(
+            "en-US",
+            {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            },
+          );
+        } catch (error) {
+          console.error("Error loading profile:", error);
+          alert("Error loading profile: " + error.message);
+        }
+      }
+
+      // Show confirmation modal
+      function confirmDeleteAccount() {
+        document.getElementById("delete-confirm-input").value = "";
+        $("#deleteModal").modal("show");
+      }
+
+      // Delete account
+      async function deleteAccount() {
+        const confirmInput = document
+          .getElementById("delete-confirm-input")
+          .value.trim();
+
+        if (confirmInput !== currentUsername) {
+          alert(
+            "Username does not match. Please type your username exactly to confirm.",
+          );
+          return;
+        }
+
+        try {
+          await userAPI.deleteAccount();
+          alert("Your account has been deleted successfully.");
+
+          // Clear local storage and redirect to login
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
+          window.location.href = "login.html";
+        } catch (error) {
+          alert("Error deleting account: " + error.message);
+        }
+      }
+
+      // Logout functionality
+      document.getElementById("logout-btn").addEventListener("click", logout);
+    </script>
+  </body>
+</html>
